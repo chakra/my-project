@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 
 import PopupDialog from 'react-native-popup-dialog'
 
-import {CardSection, Button, Spinner, Card} from "./common";
+import {CardSection, Button, Spinner, Card} from "../../components/common/index";
 
 import {
     Text,
@@ -16,8 +16,8 @@ import {
     TextInput
 } from 'react-native'
 
-import data from '../../payees'
-import Navbar from './Navbar'
+import data from '../../../payees'
+import Navbar from '../../components/Navbar'
 
 const {width, height} = Dimensions.get('window')
 

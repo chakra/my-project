@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   TextInput
 } from 'react-native';
-import {Button} from "./common";
+import {Button} from "../../components/common/index";
 
 
 export default class Home extends Component {

@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
-import Login from './src/components/Login';
+import Login from './src/containers/AuthScreen/Login';
 import firebase from "firebase";
 
 import { Font } from 'expo';
 
 import {StyleSheet, View} from 'react-native';
 import { Header, Button, Spinner } from './src/components/common';
-import Signup from "./src/components/Signup";
-import TransactionListView from "./src/components/TransactionListView";
-import PayeeList from "./src/components/PayeeList";
-import Home from "./src/components/Home";
+import Signup from "./src/containers/AuthScreen/Signup";
+import TransactionListView from "./src/containers/TransactionScreen/TransactionListView";
+import PayeeList from "./src/containers/PayeeScreen/PayeeList";
+import Home from "./src/containers/HomeScreen/Home";
 
 export default class App extends Component {
     state = { loggedIn: null };

@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {StyleSheet, View, TextInput, TouchableOpacity, Text, StatusBar } from 'react-native';
 import firebase from "firebase";
 
-import {CardSection, Button, Spinner} from "./common";
+import {CardSection, Button, Spinner} from "../../components/common/index";
 
 export default class LoginForm extends Component<{}> {
 

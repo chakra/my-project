@@ -10,11 +10,6 @@ import {
   Image
 } from 'react-native';
 
-import Rectangle4 from './Landing_images/Rectangle4.png'
-import Line from './Landing_images/Line.png'
-import Line_5 from './Landing_images/Line_5.png'
-import Rectangle4_8 from './Landing_images/Rectangle4_8.png'
-
 export default class Landing extends Component {
 
   render() {
@@ -25,17 +20,11 @@ export default class Landing extends Component {
         backgroundColor: '#0D2C4F'}}>
         <View style={styles.Landing}>
           <Text style={styles.Bubble}>Bubble</Text>
-          <Image source={Rectangle4} style={styles.Rectangle4} />
             <Text style={styles.Register}>Register</Text>
-          </Image>
           <View style={{flexDirection: 'row'}}>
-            <Image source={Line} style={styles.Line} />
             <Text style={styles.OR}>OR</Text>
-            <Image source={Line_5} style={styles.Line_5} />
           </View>
-          <Image source={Rectangle4_8} style={styles.Rectangle4_8} />
             <Text style={styles.Login}>Login</Text>
-          </Image>
         </View>
       </ScrollView>
     )

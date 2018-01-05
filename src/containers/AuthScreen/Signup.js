@@ -45,7 +45,7 @@ export default class Signup extends Component<{}> {
             <View behavior="padding" style={styles.container}>
 
                 <View style={styles.logoContainer}>
-                    <Image source={require('../../Login_images/Logo.jpg')}/>
+                    <Image source={require('../../../Login_images/Logo.jpg')}/>
                 </View>
                 <KeyboardAvoidingView>
                     <TextInput
@@ -71,7 +71,6 @@ export default class Signup extends Component<{}> {
                         ref={input => (this.passwordCInput = input)}
                         onSubmitEditing={() => this.passwordInput.focus()}
                         returnKeyType="next"
-                        secureTextEntry
                     />
                     <TextInput
                         value={this.state.password}
@@ -81,7 +80,6 @@ export default class Signup extends Component<{}> {
                         secureTextEntry={true}
                         placeholderTextColor="rgba(255,255,255,0.7)"
                         returnKeyType="go"
-                        secureTextEntry
                         ref={input => (this.passwordInput = input)}
                     />
                 </KeyboardAvoidingView>
