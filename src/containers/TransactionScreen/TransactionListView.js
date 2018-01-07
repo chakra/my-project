@@ -16,25 +16,51 @@ import {
     TextInput
 } from 'react-native'
 
-import data from '../../../transactions'
 import Navbar from '../../components/Navbar'
+
+import TransactionApi from './TransactionApi'
 
 const {width, height} = Dimensions.get('window')
 
 export default class TransactionListView extends Component {
-    constructor(props){
-        super(props)
-        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
-        this.state = {
-            isLoaded: false,
-            isOpenMenu: false,
-            dataSource: ds.cloneWithRows(data),
-            rotateY: new Animated.Value(0),
-            translateX: new Animated.Value(width),
-            menuAnimation: new Animated.Value(0),
-            text: ''
 
-        }
+    constructor(props){
+        super(props);
+
+        const api = new TransactionApi();
+        api.getTransactions()
+            .then(responseJson => {
+                console.log(responseJson);
+                const data = responseJson;
+                const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+                this.state = {
+                    isLoaded: false,
+                    isOpenMenu: false,
+                    dataSource: ds.cloneWithRows(data),
+                    rotateY: new Animated.Value(0),
+                    translateX: new Animated.Value(width),
+                    menuAnimation: new Animated.Value(0),
+                    text: ''
+                };
+            })   // Successfully logged in
+            .catch(err => alert(err.message));  // Catch any error
+
+    }
+
+    _fetchData(callback) {
+        //Limits fetches to 15 so there's lesser items from the get go
+        //http://localhost:8088/transactions/list/
+        fetch(`http://localhost:8088/transactions/list/1`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json;charset=UTF-8"'
+            }})
+            .then(response => response.json())
+            .then(callback)
+            .catch(error => {
+                console.error(error);
+            });
     }
 
     showMenu(){
@@ -135,6 +161,22 @@ export default class TransactionListView extends Component {
         })
     }
     render(){
+
+        this.fetchData(responseJson => {
+            console.log(responseJson);
+            const data = responseJson;
+            const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+            this.state = {
+                isLoaded: false,
+                isOpenMenu: false,
+                dataSource: ds.cloneWithRows(data),
+                rotateY: new Animated.Value(0),
+                translateX: new Animated.Value(width),
+                menuAnimation: new Animated.Value(0),
+                text: ''
+            };
+        });
+
         return (
             <View style={styles.container}>
                 <Animated.View

@@ -10,6 +10,7 @@ import Signup from "./src/containers/AuthScreen/Signup";
 import TransactionListView from "./src/containers/TransactionScreen/TransactionListView";
 import PayeeList from "./src/containers/PayeeScreen/PayeeList";
 import Home from "./src/containers/HomeScreen/Home";
+import Test from "./src/containers/TransactionScreen/Test";
 
 export default class App extends Component {
     state = { loggedIn: null };
@@ -46,7 +47,7 @@ export default class App extends Component {
                     </Button>
                 );
             case false:
-                return <Home />;
+                return <TransactionListView />;
             default:
                 return <Spinner size="large" />;
         }
