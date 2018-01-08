@@ -8,7 +8,7 @@ const INITIAL_STATE = {
     lastname: ''
 }
 
-const AccountReducer = (state = INITIAL_STATE, action) => {
+const AccountFormReducer = (state = INITIAL_STATE, action) => {
 
     switch (action.type) {
         case ACCOUNT_UPDATE:
@@ -23,4 +23,4 @@ const AccountReducer = (state = INITIAL_STATE, action) => {
 
 }
 
-export default AccountReducer;
+export default AccountFormReducer;

@@ -1,48 +1,64 @@
-import {FETCHING_PAYEE, FETCHING_PAYEE_SUCCESS, FETCHING_PAYEE_FAILURE, FETCHING_ACCOUNT} from './types'
+import firebase from 'firebase';
+import { Actions } from 'react-native-router-flux';
+import {
+    ACCOUNT_UPDATE,
+    ACCOUNT_CREATE,
+    FETCHING_ACCOUNT_SUCCESS,
+    ACCOUNT_SAVE_SUCCESS
+} from './types';
 
-import { connect } from 'react-redux';
-import axios from 'react-native-axios';
-import Account from "../containers/AccountScreen/Account";
+export const accountUpdate = ({ prop, value }) => {
+    return {
+        type: ACCOUNT_UPDATE,
+        payload: { prop, value }
+    };
+};
 
-const mapStateToProps = (state) => ({
-    isLoading: state.accountReducer.isLoading,
-    error: state.accountReducer.error,
-    data: state.accountReducer.account
-});
+export const accountCreate = ({ name, phone, shift }) => {
+    const { currentUser } = firebase.auth();
 
-const mapDispatchToProps = (dispatch) => ({
-    callAccountService: () => dispatch(callWebservice())
-})
-
-export const callWebservice = () => {
     return (dispatch) => {
-        dispatch(getPayee())
-        axios.get(`http://localhost:8088/customer/payees/1`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json;charset=UTF-8"'
-            }})
-            .then(data => data.json())
-            .then(json => {
-                console.log('json:', json)
-                dispatch(getPayeeSuccess(json.results))
-            })
-            .catch(err => dispatch(getPayeeFailure(err)))
-    }
-}
+        firebase.database().ref(`/users/${currentUser.uid}/accounts`)
+            .push({ name, phone, shift })
+            .then(() => {
+                dispatch({ type: ACCOUNT_CREATE });
+                Actions.accountList({ type: 'reset' });
+            });
+    };
+};
 
-export const getPayee = () => {
-    type: FETCHING_ACCOUNT
-}
+export const accountsFetch = () => {
+    const { currentUser } = firebase.auth();
 
-export const getPayeeSuccess = (data) => {
-    type: FETCHING_ACCOUNT_SUCCESS,
-        data
-}
+    return (dispatch) => {
+        firebase.database().ref(`/users/${currentUser.uid}/accounts`)
+            .on('value', snapshot => {
+                dispatch({ type: FETCHING_ACCOUNT_SUCCESS, payload: snapshot.val() });
+            });
+    };
+};
 
-export const getPayeeFailure = () => {
-    type: FETCHING_ACCOUNT_FAILURE
-}
+export const accountSave = ({ name, phone, shift, uid }) => {
+    const { currentUser } = firebase.auth();
 
-export default connect(mapStateToProps, mapDispatchToProps)(Account);
+    return (dispatch) => {
+        firebase.database().ref(`/users/${currentUser.uid}/accounts/${uid}`)
+            .set({ name, phone, shift })
+            .then(() => {
+                dispatch({ type: ACCOUNT_SAVE_SUCCESS });
+                Actions.accountList({ type: 'reset' });
+            });
+    };
+};
+
+export const accountDelete = ({ uid }) => {
+    const { currentUser } = firebase.auth();
+
+    return () => {
+        firebase.database().ref(`/users/${currentUser.uid}/employees/${uid}`)
+            .remove()
+            .then(() => {
+                Actions.accountsList({ type: 'reset' });
+            });
+    };
+};
