@@ -4,13 +4,12 @@ import {
 
 
 const initialState = {
-    payee: [],
+    account: {},
     isFetching: false,
     error: false
 }
 
-
-export default  (state = initialState, action) => {
+const AccountReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case FETCHING_ACCOUNT:
@@ -23,3 +22,5 @@ export default  (state = initialState, action) => {
             return state;
     }
 }
+
+export default AccountReducer;

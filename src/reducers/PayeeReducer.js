@@ -9,7 +9,7 @@ const initialState = {
     error: false
 }
 
-export default  (state = initialState, action) => {
+const PayeeReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case FETCHING_PAYEE:
@@ -22,3 +22,6 @@ export default  (state = initialState, action) => {
             return state;
     }
 }
+
+export default PayeeReducer;
+

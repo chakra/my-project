@@ -2,6 +2,10 @@ import React, {Component} from 'react'
 
 import PopupDialog from 'react-native-popup-dialog'
 
+import PropTypes from "prop-types";
+
+import { connect } from "react-redux";
+
 import {CardSection, Button, Spinner, Card} from "../../components/common/index";
 
 import {
@@ -21,18 +25,40 @@ import Navbar from '../../components/Navbar'
 
 const {width, height} = Dimensions.get('window')
 
-export default class PayeeList extends Component {
+class PayeeList extends Component {
+
     constructor(props){
-        super(props)
-        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+        super(props);
         this.state = {
-            isLoaded: false,
+            dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
             isOpenMenu: false,
-            dataSource: ds.cloneWithRows(data),
             rotateY: new Animated.Value(0),
             translateX: new Animated.Value(width),
             menuAnimation: new Animated.Value(0),
-            text: ''
+            text: '',
+            isLoaded: false
+        }
+    }
+
+    componentDidMount() {
+        this.props.callPayeeService();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.data != null) {
+            console.log('the state', nextProps)
+            this.setState({
+                dataSource: this.state.dataSource.cloneWithRows(nextProps.data)
+            });
+        }
+
+        if (nextProps.error != undefined) {
+            Alert.alert('Error',
+                nextProps.error,
+                [
+                    { text: 'Do you want to reload', onPress: () => this.props.callService()},
+                ],
+                { cancelable: false })
         }
     }
 
@@ -133,6 +159,7 @@ export default class PayeeList extends Component {
             text: text
         })
     }
+
     render(){
         return (
             <View style={styles.container}>
@@ -204,7 +231,19 @@ export default class PayeeList extends Component {
             </View>
         )
     }
+
 }
+
+const dataSource = new ListView.DataSource({
+    rowHasChanged: (r1, r2) => r1 !== r2
+});
+
+function mapStateToProps(state) {
+    return {
+        dataSource: dataSource.cloneWithRows(state.items)
+    };
+}
+
 
 const styles = StyleSheet.create({
     container: {
@@ -269,3 +308,10 @@ const styles = StyleSheet.create({
         color: '#fff'
     }
 })
+
+PayeeList.propTypes = {
+    dataSource: PropTypes.object,
+    dispatch: PropTypes.func
+};
+
+export default connect(mapStateToProps)(PayeeList);

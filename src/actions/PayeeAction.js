@@ -1,9 +1,24 @@
 import { FETCHING_PAYEE, FETCHING_PAYEE_SUCCESS, FETCHING_PAYEE_FAILURE } from './types'
 
-export function fetchPayeeFromAPI() {
+import { connect } from 'react-redux';
+import axios from 'react-native-axios';
+
+import PayeeList from '../containers/PayeeScreen/PayeeList'
+
+const mapStateToProps = (state) => ({
+    isLoading: state.payeeReducer.isLoading,
+    error: state.payeeReducer.error,
+    data: state.payeeReducer.payee
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    callPayeeService: () => dispatch(callWebservice())
+})
+
+export const callWebservice = () => {
     return (dispatch) => {
         dispatch(getPayee())
-        fetch(`http://localhost:8088/customer/payees/1`, {
+        axios.get(`http://localhost:8088/customer/payees/1`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -18,21 +33,17 @@ export function fetchPayeeFromAPI() {
     }
 }
 
-export function getPayee() {
-    return {
+export const getPayee = () => {
         type: FETCHING_PAYEE
-    }
 }
 
-export function getPayeeSuccess(data) {
-    return {
+export const getPayeeSuccess = (data) => {
         type: FETCHING_PAYEE_SUCCESS,
-        data,
-    }
+        data
 }
 
-export function getPayeeFailure() {
-    return {
+export const getPayeeFailure = () => {
         type: FETCHING_PAYEE_FAILURE
-    }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(PayeeList);
