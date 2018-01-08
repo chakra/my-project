@@ -1,26 +1,26 @@
 import {
-    FETCHING_ACCOUNT, FETCHING_ACCOUNT_SUCCESS, FETCHING_ACCOUNT_FAILURE
+    ACCOUNT_UPDATE, FETCHING_ACCOUNT_SUCCESS, FETCHING_ACCOUNT_FAILURE
 } from '../actions/types';
 
 
-const initialState = {
-    account: {},
-    isFetching: false,
-    error: false
+const INITIAL_STATE = {
+    firstname: '',
+    lastname: ''
 }
 
-const AccountReducer = (state = initialState, action) => {
+const AccountReducer = (state = INITIAL_STATE, action) => {
 
     switch (action.type) {
-        case FETCHING_ACCOUNT:
-            return { ...state, ...initialState, isFetching: true, error:false }
-        case FETCHING_ACCOUNT_SUCCESS:
-            return { ...state, payee:action.data, isFetching: false, error:false}
-        case FETCHING_ACCOUNT_FAILURE:
-            return { ...state, isFetching: false, error:true}
+        case ACCOUNT_UPDATE:
+            return { ...state, [action.payload.prop]: action.payload.value };
+        case ACCOUNT_CREATE:
+            return INITIAL_STATE;
+        case ACCOUNT_SAVE_SUCCESS:
+            return INITIAL_STATE;
         default:
             return state;
     }
+
 }
 
 export default AccountReducer;

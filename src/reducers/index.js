@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 
 import AuthReducer from './AuthReducer'
-import PayeeReducer from "./PayeeReducer"
+import PayeesReducer from "./PayeesReducer"
 import AccountReducer from "./AccountReducer"
 import AddressReducer from "./AddressReducer"
 import TransactionReducer from "./TransactionReducer"
@@ -11,7 +11,7 @@ import TransactionReducer from "./TransactionReducer"
 
 const AppReducers = combineReducers({
     authReducer: AuthReducer,
-    payeeReducer: PayeeReducer,
+    payeesReducer: PayeesReducer,
     accountReducer: AccountReducer,
     addressReducer: AddressReducer,
     transactionReducer: TransactionReducer

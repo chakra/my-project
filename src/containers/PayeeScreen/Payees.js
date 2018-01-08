@@ -2,8 +2,6 @@ import React, {Component} from 'react'
 
 import PopupDialog from 'react-native-popup-dialog'
 
-import PropTypes from "prop-types";
-
 import { connect } from "react-redux";
 
 import {CardSection, Button, Spinner, Card} from "../../components/common/index";
@@ -20,12 +18,11 @@ import {
     TextInput
 } from 'react-native'
 
-import data from '../../../payees'
 import Navbar from '../../components/Navbar'
 
 const {width, height} = Dimensions.get('window')
 
-class PayeeList extends Component {
+export default class Payees extends Component {
 
     constructor(props){
         super(props);
@@ -149,7 +146,7 @@ class PayeeList extends Component {
         )
     }
     filterSearch(text){
-        const newData = data.filter(function(item){
+        const newData = dataSource.filter(function(item){
             const itemData = item.name.toUpperCase()
             const textData = text.toUpperCase()
             return itemData.indexOf(textData) > -1
@@ -308,10 +305,3 @@ const styles = StyleSheet.create({
         color: '#fff'
     }
 })
-
-PayeeList.propTypes = {
-    dataSource: PropTypes.object,
-    dispatch: PropTypes.func
-};
-
-export default connect(mapStateToProps)(PayeeList);

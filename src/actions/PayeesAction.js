@@ -3,12 +3,12 @@ import { FETCHING_PAYEE, FETCHING_PAYEE_SUCCESS, FETCHING_PAYEE_FAILURE } from '
 import { connect } from 'react-redux';
 import axios from 'react-native-axios';
 
-import PayeeList from '../containers/PayeeScreen/PayeeList'
+import Payees from '../containers/PayeeScreen/Payees'
 
 const mapStateToProps = (state) => ({
-    isLoading: state.payeeReducer.isLoading,
-    error: state.payeeReducer.error,
-    data: state.payeeReducer.payee
+    isLoading: state.payeesReducer.isLoading,
+    error: state.payeesReducer.error,
+    data: state.payeesReducer.payee
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -46,4 +46,4 @@ export const getPayeeFailure = () => {
         type: FETCHING_PAYEE_FAILURE
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PayeeList);
+export default connect(mapStateToProps, mapDispatchToProps)(Payees);
