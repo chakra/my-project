@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 
 import PopupDialog from 'react-native-popup-dialog'
 
+import transactions from '../../actions/'
+
 import {CardSection, Button, Spinner, Card} from "../../components/common/index";
 
 import {
@@ -149,6 +151,7 @@ export default class TransactionListView extends Component {
             </TouchableHighlight>
         )
     }
+
     filterSearch(text){
         const newData = data.filter(function(item){
             const itemData = item.name.toUpperCase()
@@ -248,6 +251,16 @@ export default class TransactionListView extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    const transactions = _.map(state.transactions, (val, uid) => {
+        return { ...val, uid };
+    });
+
+    return { transactions };
+};
+
+export default connect(mapStateToProps, { employeesFetch })(EmployeeList);
 
 const styles = StyleSheet.create({
     container: {

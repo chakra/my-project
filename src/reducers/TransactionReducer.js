@@ -1,6 +1,6 @@
 
 import {
-    FETCHING_PAYEE, FETCHING_PAYEE_SUCCESS, FETCHING_PAYEE_FAILURE
+    FETCHING_TRANSACTION, FETCHING_TRANSACTION_FAILURE, FETCHING_TRANSACTION_SUCCESS
 } from '../actions/types';
 
 
@@ -10,14 +10,14 @@ const initialState = {
     error: false
 }
 
-export default function PayeeReducer (state = initialState, action) {
+export default  (state = initialState, action) => {
 
     switch (action.type) {
-        case FETCHING_PAYEE:
+        case FETCHING_TRANSACTION:
             return { ...state, ...initialState, isFetching: true, error:false }
-        case FETCHING_PAYEE_SUCCESS:
+        case FETCHING_TRANSACTION_SUCCESS:
             return { ...state, payee:action.data, isFetching: false, error:false}
-        case FETCHING_PAYEE_FAILURE:
+        case FETCHING_TRANSACTION_FAILURE:
             return { ...state, isFetching: false, error:true}
         default:
             return state;
